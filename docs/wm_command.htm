@@ -1,0 +1,48 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>WM_COMMAND</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>WM_COMMAND</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">WM_COMMAND can be sent to the parent window to set a new percentage value in Lister's title bar, or to check some menu items like fonts or word wrap mode.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Usage:</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8">PostMessage(GetParent(ListWin),WM_COMMAND,MAKELONG(value,itemtype),(LPARAM)ListWin);</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Description of parameters:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p9"><span class="s3">ListWin  </span>Hande to your list window created with <A HREF="listload.htm">ListLoad</A></div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">value  </span>The new value, depending on what is passed in itemtype (see below).</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">itemtype  </span>Item to change in the framework (Lister) window. Can be one of the following:</div>
+<div class="p14"><span class="s3">itm_percent  </span>Set the percent value in the menu bar of the main Lister window.</div>
+<div class="p14"><span class="s3">itm_fontstyle  </span>Set the font style: set value to lcp_ansi, lcp_ascii, or lcp_variable.</div>
+<div class="p14"><span class="s3">itm_wrap  </span>Word wrap mode on or off. Set value to 1 for on or 0 for off.</div>
+<div class="p14"><span class="s3">itm_fit  </span>Fit image to screen on or off. Set value to 1 for on or 0 for off.</div>
+<div class="p14"><span class="s3">  </span>New in 1.6: Set to 2 for lcp_fittowindow and</div>
+<div class="p14"><span class="s3">  </span>to 3 for lcp_fitlargeronly (if 1, the user-chosen option is not changed)</div>
+<div class="p14"><span class="s3">itm_center  </span>New in 1.6: Center image on screen on or off. Set value to 1 for on or 0 for off.</div>
+<div class="p14"><span class="s3">itm_next  </span>New in TC 5.52: Switch to next file if multiple opened (e.g. after playing an mp3). The value of "value" MUST be 0!</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Return value:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p9">No value is returned by Lister, so you may use PostMessage() or SendMessage().</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Notes:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p2">The message can also be sent during ListLoad, even though Lister doesn't yet know the window handle of the list window! It sets a special flag to handle this. Do not send this message if you don't want to modify any of the values!</div>
+<div class="p5">&nbsp;</div>
+<div class="p2">
+</div>
+</BODY></HTML>

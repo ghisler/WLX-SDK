@@ -1,0 +1,46 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>ListPrint</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>ListPrint</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListPrint is called when the user chooses the print function.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Declaration:</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8">int __stdcall ListPrint(HWND ListWin,char* FileToPrint,char* DefPrinter,</div>
+<div class="p8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int PrintFlags,RECT* Margins)</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Description of parameters:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p9"><span class="s3">ListWin  </span>Hande to your list window created with <A HREF="listload.htm">ListLoad</A></div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">FileToPrint  </span>The full name of the file which needs to be printed. This is the same file as loaded with <A HREF="listload.htm">ListLoad</A>.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">DefPrinter  </span>Name of the printer currently chosen in Total Commander. May be NULL (use default printer).</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">PrintFlags  </span>Currently not used (set to 0). May be used in a later version.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">Margins  </span>The left, top, right and bottom margins of the print area, in MM_LOMETRIC measurement units (1/10 mm).</div>
+<div class="p9">May be ignored.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Return value:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p9">Return either LISTPLUGIN_OK or LISTPLUGIN_ERROR.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Notes:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p2">You need to show a print dialog, in which the user can choose what to print, and select a different printer. See the sample plugin on how to do this!</div>
+<div class="p16">&nbsp;</div>
+<div class="p9">
+</div>
+</BODY></HTML>

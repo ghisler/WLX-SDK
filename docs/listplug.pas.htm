@@ -1,0 +1,91 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>listplug.pas</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p8"><B>unit listplug; { Contents of file listplug.pas }</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>interface</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>const</B></div>
+<div class="p8"><B>&nbsp; lc_copy=1;</B></div>
+<div class="p8"><B>&nbsp; lc_newparams=2;</B></div>
+<div class="p8"><B>&nbsp; lc_selectall=3;</B></div>
+<div class="p8"><B>&nbsp; lc_setpercent=4;</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>&nbsp; lcp_wraptext=1;</B></div>
+<div class="p8"><B>&nbsp; lcp_fittowindow=2;</B></div>
+<div class="p8"><B>&nbsp; lcp_ansi=4;</B></div>
+<div class="p8"><B>&nbsp; lcp_ascii=8;</B></div>
+<div class="p8"><B>&nbsp; lcp_variable=12;</B></div>
+<div class="p8"><B>&nbsp; lcp_forceshow=16;</B></div>
+<div class="p8"><B>&nbsp; lcp_fitlargeronly=32;</B></div>
+<div class="p8"><B>&nbsp; lcp_center=64;</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>&nbsp; lcs_findfirst=1;</B></div>
+<div class="p8"><B>&nbsp; lcs_matchcase=2;</B></div>
+<div class="p8"><B>&nbsp; lcs_wholewords=4;</B></div>
+<div class="p8"><B>&nbsp; lcs_backwards=8;</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>&nbsp; itm_percent=$FFFE;</B></div>
+<div class="p8"><B>&nbsp; itm_fontstyle=$FFFD;</B></div>
+<div class="p8"><B>&nbsp; itm_wrap=$FFFC;</B></div>
+<div class="p8"><B>&nbsp; itm_fit=$FFFB;</B></div>
+<div class="p8"><B>&nbsp; itm_next=$FFFA;</B></div>
+<div class="p8"><B>&nbsp; itm_center=$FFF9;</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>&nbsp; LISTPLUGIN_OK=0;</B></div>
+<div class="p8"><B>&nbsp; LISTPLUGIN_ERROR=1;</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>type</B></div>
+<div class="p8"><B>&nbsp; tListDefaultParamStruct=record</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp; size,</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp; PluginInterfaceVersionLow,</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp; PluginInterfaceVersionHi:longint;</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp; DefaultIniName:array[0..MAX_PATH-1] of char;</B></div>
+<div class="p8"><B>&nbsp; end;</B></div>
+<div class="p8"><B>&nbsp; pListDefaultParamStruct=^tListDefaultParamStruct;</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>{ Function prototypes: Functions need to be defined exactly like this!}</B></div>
+<div class="p8"><B>{</B></div>
+<div class="p8"><B>function ListLoad(ParentWin:thandle;FileToLoad:pchar;ShowFlags:integer):thandle; stdcall;</B></div>
+<div class="p8"><B>function ListLoadW(ParentWin:thandle;FileToLoad:pwidechar;ShowFlags:integer):thandle; stdcall;</B></div>
+<div class="p8"><B>function ListLoadNext(ParentWin,PluginWin:thandle;FileToLoad:pchar;ShowFlags:integer):integer; stdcall;</B></div>
+<div class="p8"><B>function ListLoadNextW(ParentWin,PluginWin:thandle;FileToLoad:pwidechar;ShowFlags:integer):integer; stdcall;</B></div>
+<div class="p8"><B>procedure ListCloseWindow(ListWin:thandle); stdcall;</B></div>
+<div class="p8"><B>procedure ListGetDetectString(DetectString:pchar;maxlen:integer); stdcall;</B></div>
+<div class="p8"><B>function ListSearchText(ListWin:thandle;SearchString:pchar;</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SearchParameter:integer):integer; stdcall;</B></div>
+<div class="p8"><B>function ListSearchTextW(ListWin:thandle;SearchString:pwidechar;</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SearchParameter:integer):integer; stdcall;</B></div>
+<div class="p8"><B>function ListSearchDialog(ListWin:thandle;FindNext:integer):integer; stdcall;</B></div>
+<div class="p8"><B>function ListSendCommand(ListWin:thandle;Command,Parameter:integer):integer; stdcall;</B></div>
+<div class="p8"><B>function ListPrint(ListWin:thandle;FileToPrint,DefPrinter:pchar;</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PrintFlags:integer;var Margins:trect):integer; stdcall;</B></div>
+<div class="p8"><B>function ListPrintW(ListWin:thandle;FileToPrint,DefPrinter:pwidechar;</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PrintFlags:integer;var Margins:trect):integer; stdcall;</B></div>
+<div class="p8"><B>{$ifdef win64}</B></div>
+<div class="p8"><B>function ListNotificationReceived(ListWin:thandle;Message:integer;wParam:WPARAM;lParam:LPARAM):integer; stdcall;</B></div>
+<div class="p8"><B>{$else}</B></div>
+<div class="p8"><B>ListNotificationReceived(ListWin:thandle;Message:integer;wParam,lParam:integer):integer; stdcall;</B></div>
+<div class="p8"><B>{$endif}</B></div>
+<div class="p8"><B>procedure ListSetDefaultParams(dps:pListDefaultParamStruct); stdcall;</B></div>
+<div class="p8"><B>function ListGetPreviewBitmap(FileToLoad:pchar;width,height:integer;</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp; contentbuf:pchar;contentbuflen:integer):hbitmap; stdcall;</B></div>
+<div class="p8"><B>function ListGetPreviewBitmapW(FileToLoad:pwidechar;width,height:integer;</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp; contentbuf:pchar;contentbuflen:integer):hbitmap; stdcall;</B></div>
+<div class="p8"><B>}</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>implementation</B></div>
+<div class="p8"><B>end.
+</B>
+</div>
+</BODY></HTML>

@@ -1,0 +1,51 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>ListSendCommand</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>ListSendCommand</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListSendCommand is called when the user changes some options in Lister's menu.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Declaration:</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8">int __stdcall ListSendCommand(HWND ListWin,int Command,int Parameter);</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Description of parameters:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p9"><span class="s3">ListWin  </span>Hande to your list window created with <A HREF="listload.htm">ListLoad</A></div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">Command  </span>One of the following commands:</div>
+<div class="p14"><span class="s3">lc_copy  </span>Copy current selection to the clipboard</div>
+<div class="p14"><span class="s3">lc_newparams  </span>New parameters passed to plugin, see Parameter below</div>
+<div class="p14"><span class="s3">lc_selectall  </span>Select the whole contents</div>
+<div class="p14"><span class="s3">lc_setpercent  </span>Go to new position in document (in percent).</div>
+<div class="p14">&nbsp;</div>
+<div class="p14"><span class="s3">Parameter  </span>Used for lc_newparams. May be a combination of:</div>
+<div class="p14"><span class="s3">lcp_wraptext  </span>Text: Word wrap mode is checked</div>
+<div class="p14"><span class="s3">lcp_ansi  </span>Ansi charset is checked</div>
+<div class="p14"><span class="s3">lcp_ascii  </span>Ascii(DOS) charset is checked</div>
+<div class="p14"><span class="s3">lcp_variable  </span>Variable width charset is checked</div>
+<div class="p14"><span class="s3">lcp_fittowindow  </span>Images: Fit image to window is checked</div>
+<div class="p14"><span class="s3">lcp_fitlargeronly  </span>Images: Sent in addition to lcp_fittowindow if only images larger than</div>
+<div class="p14"><span class="s3">  </span>the client are should be resized - smaller should be shown centered</div>
+<div class="p14"><span class="s3">lcp_center  </span>Images: Sent when the image needs to be centered</div>
+<div class="p14"><span class="s3">  </span>may be combined with lcp_fittowindow and/or lcp_fitlargeronly</div>
+<div class="p14"><span class="s3">  </span>Also used for lc_setpercent. In this case, the value is the new position (in percent) to which to scroll.</div>
+<div class="p15">You may ignore these parameters if they don't apply to your document type.</div>
+<div class="p14">&nbsp;</div>
+<div class="p9"><B>Return value:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p9">Return either LISTPLUGIN_OK or LISTPLUGIN_ERROR.</div>
+<div class="p16">&nbsp;</div>
+<div class="p9">
+</div>
+</BODY></HTML>

@@ -1,0 +1,87 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>ListGetDetectString</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>ListGetDetectString</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListGetDetectString is called when the plugin is loaded for the first time. It should return a parse function which allows Lister to find out whether your plugin can probably handle the file or not. You can use this as a first test - more thorough tests may be performed in ListLoad(). It's very important to define a good test string, especially when there are dozens of plugins loaded! The test string allows lister to load only those plugins relevant for that specific file type.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Declaration:</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8">void __stdcall ListGetDetectString(char* DetectString,int maxlen);</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Description of parameters:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p11"><span class="s5">DetectString  </span>Return the detection string here. See remarks for the syntax.</div>
+<div class="p11">&nbsp;</div>
+<div class="p11"><span class="s5">maxlen  </span>Maximum length, in bytes, of the detection string (currently 2k).</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Return value:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p9">This function doesn't return any value.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Remarks:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p2">The syntax of the detection string is as follows. There are operands, operators and functions.</div>
+<div class="p2"><B>Operands:</B></div>
+<div class="p11"><span class="s6">EXT  </span>The extension of the file to be loaded (always uppercase).</div>
+<div class="p11"><span class="s6">SIZE  </span>The size of the file to be loaded.</div>
+<div class="p11"><span class="s6">FORCE  </span>1 if the user chose 'Image/Multimedia' from the menu, 0 otherwise.</div>
+<div class="p11"><span class="s6">MULTIMEDIA  </span>This detect string is special: It is always TRUE (also in older TC versions). If it is present in the string, this plugin overrides internal multimedia viewers in TC. If not, the internal viewers are used. Check the example below!</div>
+<div class="p11"><span class="s6">[5]  </span>The fifth byte in the file to be loaded. The first 8192 bytes can be checked for a match.</div>
+<div class="p11"><span class="s6">12345  </span>The number 12345</div>
+<div class="p11"><span class="s6">"TEST"  </span>The string "TEST"</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Operators</B></div>
+<div class="p4"><span class="s2">&amp;  </span>AND. The left AND the right expression must be true (!=0).</div>
+<div class="p4"><span class="s2">|  </span>OR: Either the left OR the right expression needs to be true (!=0).</div>
+<div class="p4"><span class="s2">=  </span>EQUAL: The left and right expression need to be equal.</div>
+<div class="p4"><span class="s2">!=  </span>UNEQUAL: The left and right expression must not be equal.</div>
+<div class="p4"><span class="s2">&lt;  </span>SMALLER: The left expression is smaller than the right expression. Comparing a number and a string returns false (0). Booleans are stored as 0 (false) and 1 (true).</div>
+<div class="p4"><span class="s2">&gt;  </span>LARGER: The left expression is larger than the right expression.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Functions</B></div>
+<div class="p4"><span class="s2">()  </span>Braces: The expression inside the braces is evaluated as a whole.</div>
+<div class="p4"><span class="s2">!()  </span>NOT: The expression inside the braces will be inverted. Note that the braces are necessary!</div>
+<div class="p4"><span class="s2">FIND()  </span>The text inside the braces is searched in the first 8192 bytes of the file. Returns 1 for success and 0 for failure.</div>
+<div class="p4"><span class="s2">FINDI()  </span>The text inside the braces is searched in the first 8192 bytes of the file. Upper/lowercase is ignored.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Internal handling of variables</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">Varialbes can store numbers and strings. Operators can compare numbers with numbers and strings with strings, but not numbers with strings. Exception: A single char can also be compared with a number. Its value is its ANSI character code (e.g. "A"=65). Boolean values of comparisons are stored as 1 (true) and 0 (false).</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B><U>Examples:</U></B></div>
+<div class="p2">&nbsp;</div>
+<div class="p12"><span class="s7"><B>String  </span>Interpretation</B></div>
+<div class="p12"><span class="s7">EXT="WAV" | EXT="AVI"  </span>The file may be a Wave or AVI file.</div>
+<div class="p12">&nbsp;</div>
+<div class="p12">EXT="WAV" &amp; [0]="R" &amp; [1]="I" &amp; [2]="F" &amp; [3]="F" &amp; FIND("WAVEfmt")</div>
+<div class="p12">Also checks for Wave header "RIFF" and string "WAVEfmt"</div>
+<div class="p12">&nbsp;</div>
+<div class="p12"><span class="s7">EXT="WAV" &amp; (SIZE&lt;1000000 | FORCE)  </span>Load wave files smaller than 1000000 bytes at startup/file change, and all wave files if the user explictly chooses 'Image/Multimedia' from the menu.</div>
+<div class="p12">&nbsp;</div>
+<div class="p12">([0]="P" &amp; [1]="K" &amp; [2]=3 &amp; [3]=4) | ([0]="P" &amp; [1]="K" &amp; [2]=7 &amp; [3]=8)</div>
+<div class="p12">Checks for the ZIP header PK#3#4 or PK#7#8 (the latter is used for multi-volume zip files).</div>
+<div class="p12">&nbsp;</div>
+<div class="p12"><span class="s7">EXT="TXT" &amp; !(FINDI("&lt;HEAD&gt;") | FINDI("&lt;BODY&gt;"))  </span>This plugin handles text files which aren't HTML files. A first detection is done with the &lt;HEAD&gt; and &lt;BODY&gt; tags. If these are not found, a more thorough check may be done in the plugin itself.</div>
+<div class="p12">&nbsp;</div>
+<div class="p12"><span class="s7">MULTIMEDIA &amp; (EXT="WAV" | EXT="MP3")  </span>Replace the internal player for WAV and MP3 files (which normally uses Windows Media Player as a plugin). Requires TC 6.0 or later!</div>
+<div class="p12">&nbsp;</div>
+<div class="p12"><B>Operator precedence:</B></div>
+<div class="p12">&nbsp;</div>
+<div class="p12">The strongest operators are =, != &lt; and &gt;, then comes &amp;, and finally |. What does this mean? Example:</div>
+<div class="p12">expr1="a" &amp; expr2 | expr3&lt;5 &amp; expr4!=b will be evaluated as ((expr1="a") &amp; expr2) | ((expr3&lt;5) &amp; (expr4!="b"))</div>
+<div class="p12">If in doubt, simply use braces to make the evaluation order clear.</div>
+<div class="p13">&nbsp;</div>
+<div class="p12">
+</div>
+</BODY></HTML>

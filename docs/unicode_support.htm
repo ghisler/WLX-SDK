@@ -1,0 +1,74 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>Unicode Support</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>Unicode Support</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">With Total Commander 7.5 (lister plugin version 2.0), Unicode support has been added to all plugin types. In principle, you need to implement the same functions as for ANSI, with two differences: The function name is changed from FunctionName to FunctionNameW, and ANSI strings are changed to wide char names.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">Total Commander will call the Unicode functions on all NT-based systems (Windows NT, 2000, XP, Vista, 7) if they are present. If not, or on Windows 9x/ME, Total Commander will call the ANSI functions.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>The following functions of the lister plugin interface support Unicode:</B></div>
+<div class="p18">&nbsp;</div>
+<div class="p18"><A HREF="listload.htm">ListLoad</A><span class="s14">W</span></div>
+<div class="p18"><A HREF="listloadnext.htm">ListLoadNext</A><span class="s14">W</span></div>
+<div class="p18"><A HREF="listprint.htm">ListPrint</A><span class="s14">W</span></div>
+<div class="p18"><A HREF="listgetpreviewbitmap.htm">ListGetPreviewBitmap</A><span class="s14">W</span></div>
+<div class="p2"><A HREF="listsearchtext.htm">ListSearchText</A>W&nbsp;&nbsp;&nbsp; (used to search for Unicode text in Unicode documents)</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>The following functions do not exist in a Unicode form and must be implemented as ANSI:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><A HREF="listsendcommand.htm">ListSendCommand</A></div>
+<div class="p2"><A HREF="listnotificationreceived.htm">ListNotificationReceived</A></div>
+<div class="p2"><A HREF="listclosewindow.htm">ListCloseWindow</A></div>
+<div class="p2"><A HREF="listgetdetectstring.htm">ListGetDetectString</A></div>
+<div class="p2"><A HREF="listsetdefaultparams.htm">ListSetDefaultParams</A></div>
+<div class="p2"><A HREF="listsearchdialog.htm">ListSearchDialog</A></div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>What's the easiest way to support Unicode in an existing plugin?</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>There are actually two ways, an "all in one" combined Unicode/ANSI plugin, and two separate plugins.</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>A. Combined Unicode/ANSI plugin</B></div>
+<div class="p2"><B>1. </B>Get my sample plugin fsplugin (file system plugins section) even if you write a different type of plugin!</div>
+<div class="p2"><B>2. </B>Add the files cunicode.h and cunicode.cpp to your project. They contain various functions to make Unicode support easier.</div>
+<div class="p2"><B>3. </B>Convert your existing functions to Unicode and rename them to FunctionNameW. For all file functions like CreateFile, do not call their Unicode counterpart CreateFileW directly. Instead, call the functions from cunicode.cpp like CreateFileT. These functions automatically call the right Unicode or ANSI function, and even support file name lengths &gt;259 characters!</div>
+<div class="p2"><B>4. </B>For each converted function like FunctionNameW, recreate a function FunctionName which you call this way:</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">int __stdcall FunctionName(char* SomeString1,char* SomeString2)</div>
+<div class="p2">{</div>
+<div class="p2">&nbsp;&nbsp;&nbsp; WCHAR SomeString1W[wdirtypemax],SomeString2W[wdirtypemax];</div>
+<div class="p2">&nbsp;&nbsp;&nbsp; return FunctionNameW(awfilenamecopy(SomeString1W,SomeString1),awfilenamecopy(SomeString2W,SomeString2));</div>
+<div class="p2">}</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">The Macro awfilenamecopy will convert the ANSI string SomeString1 to Unicode and store it inSomeString1W. This variable must not be a pointer, because awfilenamecopy uses "countof" to get the target length.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>B. Two separate plugins, one Unicode, one ANSI</B></div>
+<div class="p2">This method is especially suited for C/C++ plugins. Have a look at the WebDAV file system plugin sources for a sample plugin using this method. Here are the steps to convert an ANSI plugin to Unicode this way:</div>
+<div class="p3"><span class="s1"><B>1.  </B></span>Replace all string references like char* and LPSTR by TCHAR*</div>
+<div class="p3"><span class="s1"><B>2.  </B></span>Replace all string handing functions like strchr or strcpy by _tcschr and _tcscpy</div>
+<div class="p3"><span class="s1"><B>3.  </B></span>Put TEXT() around all string constants</div>
+<div class="p3"><span class="s1"><B>4.  </B></span>Make a copy of the current project within the same project map. Add the UNICODE and _UNICODE defines in the compiler settings of the Unicode project</div>
+<div class="p3"><span class="s1"><B>5.  </B></span>Remove the .def file from the Unicode project. Create a new .def file, where the functions are defined as follows:</div>
+<div class="p3"><span class="s1">  </span>ListLoadW=ListLoad</div>
+<div class="p3"><span class="s1">  </span>ListLoadNextW=ListLoadNext</div>
+<div class="p3"><span class="s1">  </span>ListSendCommand</div>
+<div class="p3"><span class="s1">  </span>...</div>
+<div class="p3"><span class="s1">  </span>Note the difference between Unicode and non-Unicode functions (see list above which are Unicode)</div>
+<div class="p3"><span class="s1"><B>6.  </B></span>Set the output file to the name &lt;pluginname&gt;.uwlx, in the same directory as the .wfx file from the first project</div>
+<div class="p3">&nbsp;</div>
+<div class="p3">Total Commander will try to load a .uwlx file with the same name as the .wlx file on Unicode systems (Win NT, 2000, XP, Vista, 7).</div>
+<div class="p3">&nbsp;</div>
+<div class="p2"><B>Note: </B>You cannot have just the .uwlx plugin if you want to create a Unicode-only plugin! Instead, create a combined Unicode/ANSI plugin (method A), where the ANSI functions are just empty functions returning an error.</div>
+<div class="p2">
+</div>
+</BODY></HTML>

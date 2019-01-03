@@ -1,0 +1,40 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>ListSearchDialog</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>ListSearchDialog</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListSearchDialog is called when the user tries to find text in the plugin. Only implement this function if your plugin requires a plugin-specific search dialog! For searching text, please implement <A HREF="listsearchtext.htm">ListSearchText</A> instead!</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Declaration:</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8">int __stdcall ListSearchDialog(HWND ListWin,int FindNext);</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Description of parameters:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p9"><span class="s3">ListWin  </span>Hande to your list window created with <A HREF="listload.htm">ListLoad</A></div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">FindNext  </span>0: FindFirst was chosen by the user</div>
+<div class="p9"><span class="s3">  </span>1: FindNext was chosen from the menu</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Return value:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p2">Return LISTPLUGIN_OK if you implement this function, or LISTPLUGIN_ERROR if Total Commander should show its own text search dialog and call ListSearchText later. This allows a plugin to support both its own search method via ListSearchDialog, and the standard search method via ListSearchText! Do NOT return LISTPLUGIN_ERROR if the search fails!</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Remarks:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p2">The plugin needs to show the search dialog and highlight/select the found text by itself.</div>
+<div class="p2">Requires Total Commander 7 or later.</div>
+<div class="p5">&nbsp;</div>
+<div class="p2">
+</div>
+</BODY></HTML>

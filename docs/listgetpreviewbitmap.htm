@@ -1,0 +1,108 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>ListGetPreviewBitmap</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>ListGetPreviewBitmap</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListGetPreviewBitmap is called to retrieve a bitmap for the thumbnails view. Please only implement and export this function if it makes sense to show preview pictures for the supported file types! This function is new in version 1.4. It requires Total Commander &gt;=6.5, but is ignored by older versions.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Declaration:</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8">HBITMAP __stdcall ListGetPreviewBitmap(char* FileToLoad,int width,int height,</div>
+<div class="p8">&nbsp;&nbsp;&nbsp; char* contentbuf,int contentbuflen);</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Description of parameters:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p9"><span class="s3">FileToLoad  </span>The name of the file for which to load the preview bitmap.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">width  </span>Requested maximum width of the bitmap.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">height  </span>Requested maximum height of the bitmap</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">contentbuf  </span>The first 8 kBytes (8k) of the file. Often this is enough data to show a reasonable preview, e.g. the first few lines of a text file.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">contentbuflen  </span>The length of the data passed in contentbuf. Please note that contentbuf is not a 0 terminated string, it may contains 0 bytes in the middle! It's just the 1:1 contents of the first 8k of the file.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Return value:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">Return a device-dependent bitmap created with e.g. CreateCompatibleBitmap.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Notes:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">1.<B> </B>This function is only called in Total Commander 6.5 and later. The plugin version will be &gt;= 1.4.</div>
+<div class="p2">2. The bitmap handle goes into possession of Total Commander, which will delete it after using it. The plugin must not delete the bitmap handle!</div>
+<div class="p2">3. Make sure you scale your image correctly to the desired maximum width+height! Do not fill the rest of the bitmap - instead, create a bitmap which is SMALLER than requested! This way, Total Commander can center your image and fill the rest with the default background color.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">The following sample code will stretch a bitmap with dimensions bigwidth*bigheight down to max. width*height keeping the correct aspect ratio (proportions):</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">HBITMAP __stdcall ListGetPreviewBitmap(char* FileToLoad,int width,int height,</div>
+<div class="p2">&nbsp;&nbsp;&nbsp; char* contentbuf,int contentbuflen)</div>
+<div class="p2">{</div>
+<div class="p2"><span class="s8">  </span>int w,h;</div>
+<div class="p2"><span class="s8">  </span>int stretchx,stretchy;</div>
+<div class="p2"><span class="s8">  </span>OSVERSIONINFO vx;</div>
+<div class="p2"><span class="s8">  </span>BOOL is_nt;</div>
+<div class="p2"><span class="s8">  </span>BITMAP bmpobj;</div>
+<div class="p2"><span class="s8">  </span>HBITMAP bmp_image,bmp_thumbnail,oldbmp_image,oldbmp_thumbnail;</div>
+<div class="p2"><span class="s8">  </span>HDC maindc,dc_thumbnail,dc_image;</div>
+<div class="p2"><span class="s8">  </span>POINT pt;</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><span class="s8">  </span>// check for operating system: Windows 9x does NOT support the HALFTONE stretchblt mode!</div>
+<div class="p2"><span class="s8">  </span>vx.dwOSVersionInfoSize=sizeof(vx);</div>
+<div class="p2"><span class="s8">  </span>GetVersionEx(&amp;vx);</div>
+<div class="p2"><span class="s8">  </span>is_nt=vx.dwPlatformId==VER_PLATFORM_WIN32_NT;</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><span class="s8">  </span>// here you load your image</div>
+<div class="p2"><span class="s8">  </span>bmp_image=SomeHowLoadImageFromFile(FileToLoad);</div>
+<div class="p2"><span class="s8">  </span>if (bmp_image &amp;&amp; GetObject(bmp_image,sizeof(bmpobj),&amp;bmpobj)) {</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9">  </span>bigx=bmpobj.bmWidth;</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9">  </span>bigy=bmpobj.bmHeight;</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9">  </span>// do we need to stretch?</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9">  </span>if ((bigx&gt;=width || bigy&gt;=height) &amp;&amp; (bigx&gt;0 &amp;&amp; bigy&gt;0)) {</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>stretchy=MulDiv(width,bigy,bigx);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>if (stretchy&lt;=height) {</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>w=width;</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>h=stretchy;</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>if (h&lt;1) h=1;</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>} else {</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>stretchx=MulDiv(height,bigx,bigy);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>w=stretchx;</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>if (w&lt;1) w=1;</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>h=height;</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>}</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>maindc=GetDC(GetDesktopWindow());</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>dc_thumbnail=CreateCompatibleDC(maindc);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>dc_image=CreateCompatibleDC(maindc);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>bmp_thumbnail=CreateCompatibleBitmap(maindc,w,h);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>ReleaseDC(GetDesktopWindow(),maindc);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>oldbmp_image=(HBITMAP)SelectObject(dc_image,bmp_image);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>oldbmp_thumbnail=(HBITMAP)SelectObject(dc_thumbnail,bmp_thumbnail);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>if(is_nt) {</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>SetStretchBltMode(dc_thumbnail,HALFTONE);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>SetBrushOrgEx(dc_thumbnail,0,0,&amp;pt);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>} else {</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>SetStretchBltMode(dc_thumbnail,COLORONCOLOR);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>}</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>StretchBlt(dc_thumbnail,0,0,w,h,dc_image,0,0,bigx,bigy,SRCCOPY);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>SelectObject(dc_image,oldbmp_image);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>SelectObject(dc_thumbnail,oldbmp_thumbnail);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>DeleteDC(dc_image);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>DeleteDC(dc_thumbnail);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>DeleteObject(bmp_image);</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9"> &nbsp;</span><span class="s9">  </span>bmp_image=bmp_thumbnail;</div>
+<div class="p2"><span class="s8"> &nbsp;</span><span class="s9">  </span>}</div>
+<div class="p2"><span class="s8">  </span>}</div>
+<div class="p2"><span class="s8">  </span>return bmp_image;</div>
+<div class="p2">}</div>
+<div class="p2">
+</div>
+</BODY></HTML>

@@ -1,0 +1,54 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>ListLoad</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>ListLoad</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListLoad is called when a user opens lister with F3 or the Quick View Panel with Ctrl+Q, and when the definition string either doesn't exist, or its evaluation returns true.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Declaration:</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8">HWND __stdcall ListLoad(HWND ParentWin,char* FileToLoad,int ShowFlags);</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Description of parameters:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p9"><span class="s3">ParentWin  </span>This is lister's window. Create your plugin window as a child of this window.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">FileToLoad  </span>The name of the file which has to be loaded.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">ShowFlags  </span>A combination of the following flags:</div>
+<div class="p14"><span class="s3">lcp_wraptext  </span>Text: Word wrap mode is checked</div>
+<div class="p14"><span class="s3">lcp_fittowindow  </span>Images: Fit image to window is checked</div>
+<div class="p14"><span class="s3">lcp_fitlargeronly  </span>Fit image to window only if larger than the window.</div>
+<div class="p14"><span class="s3">  </span>Always set together with lcp_fittowindow.</div>
+<div class="p14"><span class="s3">lcp_center  </span>Center image in viewer window</div>
+<div class="p14"><span class="s3">lcp_ansi  </span>Ansi charset is checked</div>
+<div class="p14"><span class="s3">lcp_ascii  </span>Ascii(DOS) charset is checked</div>
+<div class="p14"><span class="s3">lcp_variable  </span>Variable width charset is checked</div>
+<div class="p14"><span class="s3">lcp_forceshow  </span>User chose 'Image/Multimedia' from the menu. See remarks.</div>
+<div class="p15">You may ignore these parameters if they don't apply to your document type.</div>
+<div class="p14">&nbsp;</div>
+<div class="p9"><B>Return value:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p2">Return a handle to your window if load succeeds, NULL otherwise. If NULL is returned, Lister will try the next plugin.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Remarks:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p2">Please note that multiple Lister windows can be open at the same time! Therefore you cannot save settings in global variables. You can call RegisterClass with the parameter cbWndExtra to reserve extra space for your data, which you can then access via GetWindowLong(). Or use an internal list, and store the list parameter via SetWindowLong(hwnd,GWL_ID,...).</div>
+<div class="p2">Lister will subclass your window to catch some hotkeys like 'n' or 'p'.</div>
+<div class="p2">When lister is activated, it will set the focus to your window. If your window contains child windows, then make sure that you set the focus to the correct child when your main window receives the focus!</div>
+<div class="p2">If lcp_forceshow is defined, you may try to load the file even if the plugin wasn't made for it. Example: A plugin with line numbers may only show the file as such when the user explicitly chooses 'Image/Multimedia' from the menu.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">Lister plugins which only create thumbnail images do not need to implement this function.
+
+</div>
+</BODY></HTML>

@@ -1,0 +1,41 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>ListNotificationReceived</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>ListNotificationReceived</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListNotificationReceived is called when the parent window receives a notification message from the child window: WM_COMMAND, WM_NOTIFY, WM_MEASUREITEM or WM_DRAWITEM</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Declaration:</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8">int __stdcall ListNotificationReceived(HWND ListWin,int Message,WPARAM wParam,LPARAM lParam);</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Description of parameters:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p9"><span class="s3">ListWin  </span>Hande to your list window created with <A HREF="listload.htm">ListLoad</A></div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">Message  </span>The received message, one of the following: WM_COMMAND, WM_NOTIFY, WM_MEASUREITEM or WM_DRAWITEM.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">wParam  </span>The WPARAM parameter of the message.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">lParam  </span>The LPARAM parameter of the message.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Return value:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p9">Return the value described for that message in the Windows API help.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Notes:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p2">Do not implement this function if you don't use any owner-drawn controls and don't require any notification messages! Possible applications: Owner-drawn Listview control, reacting to scroll messages, etc.</div>
+<div class="p2">
+</div>
+</BODY></HTML>

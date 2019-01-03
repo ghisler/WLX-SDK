@@ -1,0 +1,75 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>listplug.h</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p8"><B>/* Contents of file listplug.h */</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p2"><span class="s10"><B>#define lc_copy &nbsp;</span><span class="s9">  </span>1</B></div>
+<div class="p2"><span class="s10"><B>#define lc_newparams  </span>2</B></div>
+<div class="p2"><span class="s10"><B>#define lc_selectall  </span>3</B></div>
+<div class="p2"><span class="s10"><B>#define lc_setpercent  </span>4</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p2"><span class="s10"><B>#define lcp_wraptext  </span>1</B></div>
+<div class="p8"><B>#define lcp_fittowindow 2</B></div>
+<div class="p2"><span class="s10"><B>#define lcp_ansi &nbsp;</span><span class="s9">  </span>4</B></div>
+<div class="p2"><span class="s10"><B>#define lcp_ascii &nbsp;</span><span class="s9">  </span>8</B></div>
+<div class="p2"><span class="s10"><B>#define lcp_variable  </span>12</B></div>
+<div class="p2"><span class="s10"><B>#define lcp_forceshow  </span>16</B></div>
+<div class="p8"><B>#define lcp_fitlargeronly 32</B></div>
+<div class="p2"><span class="s10"><B>#define lcp_center  </span>64</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p2"><span class="s10"><B>#define lcs_findfirst  </span>1</B></div>
+<div class="p2"><span class="s10"><B>#define lcs_matchcase  </span>2</B></div>
+<div class="p2"><span class="s10"><B>#define lcs_wholewords  </span>4</B></div>
+<div class="p2"><span class="s10"><B>#define lcs_backwards  </span>8</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p2"><span class="s10"><B>#define itm_percent  </span>0xFFFE</B></div>
+<div class="p2"><span class="s10"><B>#define itm_fontstyle  </span>0xFFFD</B></div>
+<div class="p2"><span class="s10"><B>#define itm_wrap &nbsp;</span><span class="s9">  </span>0xFFFC</B></div>
+<div class="p2"><span class="s10"><B>#define itm_fit &nbsp;</span><span class="s9">  </span>0xFFFB</B></div>
+<div class="p2"><span class="s10"><B>#define itm_next &nbsp;</span><span class="s9">  </span>0xFFFA</B></div>
+<div class="p2"><span class="s10"><B>#define itm_center  </span>0xFFF9</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p2"><span class="s10"><B>#define LISTPLUGIN_OK  </span>0</B></div>
+<div class="p2"><span class="s10"><B>#define LISTPLUGIN_ERROR  </span>1</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>typedef struct {</B></div>
+<div class="p2"><span class="s10"><B>  </span>int size;</B></div>
+<div class="p2"><span class="s10"><B>  </span>DWORD PluginInterfaceVersionLow;</B></div>
+<div class="p2"><span class="s10"><B>  </span>DWORD PluginInterfaceVersionHi;</B></div>
+<div class="p2"><span class="s10"><B>  </span>char DefaultIniName[MAX_PATH];</B></div>
+<div class="p8"><B>} ListDefaultParamStruct;</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8"><B>HWND __stdcall ListLoad(HWND ParentWin,char* FileToLoad,int ShowFlags);</B></div>
+<div class="p8"><B>HWND __stdcall ListLoadW(HWND ParentWin,WCHAR* FileToLoad,int ShowFlags);</B></div>
+<div class="p8"><B>int __stdcall ListLoadNext(HWND ParentWin,HWND PluginWin,char* FileToLoad,int ShowFlags);</B></div>
+<div class="p8"><B>int __stdcall ListLoadNextW(HWND ParentWin,HWND PluginWin,WCHAR* FileToLoad,int ShowFlags);</B></div>
+<div class="p8"><B>void __stdcall ListCloseWindow(HWND ListWin);</B></div>
+<div class="p8"><B>void __stdcall ListGetDetectString(char* DetectString,int maxlen);</B></div>
+<div class="p8"><B>int __stdcall ListSearchText(HWND ListWin,char* SearchString,int SearchParameter);</B></div>
+<div class="p8"><B>int __stdcall ListSearchTextW(HWND ListWin,WCHAR* SearchString,int SearchParameter);</B></div>
+<div class="p8"><B>int __stdcall ListSearchDialog(HWND ListWin,int FindNext);</B></div>
+<div class="p8"><B>int __stdcall ListSendCommand(HWND ListWin,int Command,int Parameter);</B></div>
+<div class="p8"><B>int __stdcall ListPrint(HWND ListWin,char* FileToPrint,char* DefPrinter,</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int PrintFlags,RECT* Margins);</B></div>
+<div class="p8"><B>int __stdcall ListPrintW(HWND ListWin,WCHAR* FileToPrint,WCHAR* DefPrinter,</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int PrintFlags,RECT* Margins);</B></div>
+<div class="p8"><B>int __stdcall ListNotificationReceived(HWND ListWin,int Message,WPARAM wParam,LPARAM lParam);</B></div>
+<div class="p8"><B>void __stdcall ListSetDefaultParams(ListDefaultParamStruct* dps);</B></div>
+<div class="p8"><B>HBITMAP __stdcall ListGetPreviewBitmap(char* FileToLoad,int width,int height,</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp; char* contentbuf,int contentbuflen);</B></div>
+<div class="p8"><B>HBITMAP __stdcall ListGetPreviewBitmapW(WCHAR* FileToLoad,int width,int height,</B></div>
+<div class="p8"><B>&nbsp;&nbsp;&nbsp; char* contentbuf,int contentbuflen);</B></div>
+<div class="p5">&nbsp;</div>
+<div class="p2">
+</div>
+</BODY></HTML>

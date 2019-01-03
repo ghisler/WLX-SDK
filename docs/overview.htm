@@ -1,0 +1,54 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>Overview</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>Overview</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">This help file is about writing lister plugins for Total Commander. Lister system plugins will be loaded in lister (F3 or Ctrl+Q in Total Commander) to show special file contents.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>The minimum function needed for a Lister plugin is:</B></div>
+<div class="p2"><span class="s12"><A HREF="listload.htm">ListLoad</A>  </span>Tells the plugin to load a file and create a child window for it</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>The following are optional functions</B>:</div>
+<div class="p2">&nbsp;</div>
+<div class="p17"><span class="s13"><A HREF="listloadnext.htm">ListLoadNext</A>  </span>Load next file with same plugin</div>
+<div class="p17"><span class="s13"><A HREF="listclosewindow.htm">ListCloseWindow</A>  </span>Tells the plugin that the user switches to a different file or plugin</div>
+<div class="p17"><span class="s13"><A HREF="listgetdetectstring.htm">ListGetDetectString</A>  </span>Allows Total Commander to detect the file types supported by the plugin without actually loading the plugin</div>
+<div class="p17"><span class="s13"><A HREF="listsearchtext.htm">ListSearchText</A>  </span>The user tries to find text</div>
+<div class="p17"><span class="s13"><A HREF="listsendcommand.htm">ListSendCommand</A>  </span>Passes various commands to the plugin</div>
+<div class="p17"><span class="s13"><A HREF="listprint.htm">ListPrint</A>  </span>Tells the plugin to print the displayed file</div>
+<div class="p17"><span class="s13"><A HREF="listnotificationreceived.htm">ListNotificationReceived</A>  </span>The parent window of the plugin receives a notification message</div>
+<div class="p17"><span class="s13"><A HREF="listsetdefaultparams.htm">ListSetDefaultParams</A>  </span>Tells the plugin the interface version and default settings file</div>
+<div class="p17"><span class="s13"><A HREF="listgetpreviewbitmap.htm">ListGetPreviewBitmap</A>  </span>Can be used for thumbnail view to display a preview</div>
+<div class="p17"><span class="s13"><A HREF="listsearchdialog.htm">ListSearchDialog</A>  </span>Allows the plugin to show its own search dialog instead of the default dialog</div>
+<div class="p9">&nbsp;</div>
+<div class="p2"><B>How it works:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">When a user opens lister with F3 or the Quick View Panel with Ctrl+Q, Total Commander checks the section [ListerPlugins] in wincmd.ini. For all plugins found, it checks for the nr_detect key (with nr the plugin number). If present, the string is used as a parse function for the file. This allows to load only the plugin which is responsible for a specific file type. If nr_detect isn't found, the plugin is loaded and ListGetDetectString is called (if present). If ListGetDetectString exists, its return value is stored in nr_detect.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">If nr_detect isn't present, or parsing of nr_detect returns true, the <A HREF="listload.htm">ListLoad</A> function is called. If <A HREF="listload.htm">ListLoad</A> returns a window handle, the load process is complete. Otherwise the next plugin is checked (as above).</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListPrint is called if the user chooses the 'print' command from the menu.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListSendCommand is called when the user chooses some other menu command, like select all, or copy to clipboard.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListSearchText is called when the user uses the find or find next function.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListCloseWindow will be called when a different file is loaded, or lister is closed. If ListCloseWindow isn't implemented, the window will simply be closed with DestroyWindow.</div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListGetPreviewBitmap will be called to show a preview bitmap in thumbnail view. Please only implement this function if it makes sense for your type of images!</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Note:</B> It's extremely important to create a good detection string, especially if loading of your plugin is slow! With a good detection string, your plugin will only be loaded when needed. If you cannot make a good detection string, then make sure that your plugin doesn't have any static objects defined as global variables! These would be loaded with the DLL! Only create such objects in the ListLoad function!</div>
+<div class="p5">&nbsp;</div>
+<div class="p2">
+</div>
+</BODY></HTML>

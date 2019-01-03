@@ -1,0 +1,45 @@
+<HTML><HEAD>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	
+	<TITLE>ListSearchText</TITLE>
+	
+	<META NAME="AUTHOR" CONTENT="Copyright ©2002-2019 Christian Ghisler">
+	<META NAME="GENERATOR" CONTENT="HelpScribble 7.8.0">
+<link href="ie.css" type="text/css" rel="stylesheet">
+<!--[if gte IE 5]>
+<style type="text/css">@import url(ie5+.css);</style>
+<![endif]-->
+</HEAD>
+<BODY>
+<div class="p1"><B>ListSearchText</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p2">ListSearchText is called when the user tries to find text in the plugin. Don't implement this function if your plugin doesn't contain any text, or doesn't support text searches!</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Declaration:</B></div>
+<div class="p8">&nbsp;</div>
+<div class="p8">int __stdcall ListSearchText(HWND ListWin,char* SearchString,int SearchParameter);</div>
+<div class="p2">&nbsp;</div>
+<div class="p2"><B>Description of parameters:</B></div>
+<div class="p2">&nbsp;</div>
+<div class="p9"><span class="s3">ListWin  </span>Hande to your list window created with <A HREF="listload.htm">ListLoad</A></div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">SearchString  </span>String to be searched.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><span class="s3">SearchParameter  </span>A combination of the following search flags:</div>
+<div class="p14"><span class="s3">lcs_findfirst  </span>Search from the beginning of the first displayed line (not set: find next)</div>
+<div class="p14"><span class="s3">lcs_matchcase  </span>The search string is to be treated case-sensitively.</div>
+<div class="p14"><span class="s3">lcs_wholewords  </span>Find whole words only.</div>
+<div class="p14"><span class="s3">lcs_backwards  </span>Search backwards towards the beginning of the file.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Return value:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p9">Return either LISTPLUGIN_OK or LISTPLUGIN_ERROR.</div>
+<div class="p9">&nbsp;</div>
+<div class="p9"><B>Remarks:</B></div>
+<div class="p9">&nbsp;</div>
+<div class="p2">The plugin needs to highlight/select the found text by itself.</div>
+<div class="p5">&nbsp;</div>
+<div class="p2">
+</div>
+</BODY></HTML>
