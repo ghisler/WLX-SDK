@@ -3,7 +3,7 @@ a:link { color:#008000;text-decoration:none;}
 a:visited { color:#800000;text-decoration:none;}
 a:active { color:#008000;text-decoration:underline;}
 a:hover { color:#008000;text-decoration:underline;}
-div { font-family:Arial,sans-serif; }
+div { font-family:Arial,sans-serif;font-size:x-small; }
 .s1 { margin-left:0pt;text-indent:0pt;width: 11pt; }
 .s2 { margin-left:0pt;text-indent:0pt;width: 57pt; }
 .s3 { margin-left:0pt;text-indent:0pt;width: 113pt; }
@@ -13,7 +13,7 @@ div { font-family:Arial,sans-serif; }
 .s7 { margin-left:0pt;text-indent:0pt;width: 255pt; }
 .s8 { width: 72pt; }
 .s9 { width: 72pt }
-.s10 { width: 72pt;font-family:Courier New; }
+.s10 { width: 199pt;font-family:Courier New; }
 .s11 { margin-left:0pt;text-indent:0pt;width: 113pt;font-family:Courier New; }
 .s12 { width: 141pt; }
 .s13 { margin-left:0pt;text-indent:0pt;width: 141pt; }
