@@ -30,6 +30,7 @@ const
   itm_fit=$FFFB;
   itm_next=$FFFA;
   itm_center=$FFF9;
+  itm_focus=$FFF8;
 
   LISTPLUGIN_OK=0;
   LISTPLUGIN_ERROR=1;

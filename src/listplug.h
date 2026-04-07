@@ -27,6 +27,7 @@
 #define itm_fit   0xFFFB
 #define itm_next   0xFFFA
 #define itm_center 0xFFF9
+#define itm_focus  0xFFF8
 
 #define LISTPLUGIN_OK 0
 #define LISTPLUGIN_ERROR 1
